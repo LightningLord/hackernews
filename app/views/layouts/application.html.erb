@@ -7,8 +7,10 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
+  <nav>
+    <%= link_to "Log in", new_session_path%>
+  </nav>
+  <%= yield %>
 
 </body>
 </html>
