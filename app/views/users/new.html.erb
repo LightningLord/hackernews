@@ -1,1 +1,10 @@
-Root Page!
+<h1>Sign Up</h1>
+<ul>
+  <%= form_for @user do |f| %>
+    <li><%= f.label "name" %></li>
+    <li><%= f.text_field :name %></li>
+    <li><%= f.label "password" %></li>
+    <li><%= f.password_field :password%></li>
+    <%= f.submit%>
+    <% end %>
+</ul>
