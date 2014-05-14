@@ -19,14 +19,26 @@ describe "posts", :js => false do
   describe "new posts" do
     context 'logged in user' do
     let(:ned_stark){FactoryGirl.create(:user)}
+    before(:each) do
+      visit new_session_path
+      fill_in "name", :with => ned_stark.name
+      fill_in "password", :with => ned_stark.password
+      click_button "Log in"
+    end
       it "can access the new post form" do
-        visit new_session_path
-        fill_in "name", :with => ned_stark.name
-        fill_in "password", :with => ned_stark.password
-        click_button "Log in"
         click_on "New Post"
         expect(page).to have_content "Title"
         expect(page).to have_content "Content"
+      end
+
+      it "can create a post" do
+        visit new_post_path
+        fill_in "post[title]", :with => "Winter"
+        fill_in "post[content]", :with => "Is Coming"
+        click_on "Create Post"
+        expect(page).to have_content("Winter")
+        expect(page).to have_content("Is Coming")
+        expect(page).to have_content(ned_stark.name)
       end
     end
   end
