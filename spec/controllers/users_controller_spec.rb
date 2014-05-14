@@ -33,6 +33,14 @@ describe UsersController do
   end
 
   describe "show" do
-    it "assigns @user to the logged in user"
+    let(:new_user){FactoryGirl.create(:user)}
+    before(:each){get :show, :id => new_user.id}
+    it "assigns @user to the logged in user" do
+      expect(assigns(:user)).to eq new_user
+    end
+
+    it "is successful" do
+      expect(response).to be_successful
+    end
   end
 end
