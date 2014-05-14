@@ -19,6 +19,12 @@ describe "Users", :js => false do
       visit root_path
       expect(page).to have_link "Log in"
     end
+
+    it "shows a login form" do
+      visit new_session_path
+      expect(page).to have_content "Name"
+      expect(page).to have_content "Password"
+    end
   end
 
 end
