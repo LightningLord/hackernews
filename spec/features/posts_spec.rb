@@ -15,4 +15,19 @@ describe "posts", :js => false do
       expect(page).to have_content new_post.content
     end
   end
+
+  describe "new posts" do
+    context 'logged in user' do
+    let(:ned_stark){FactoryGirl.create(:user)}
+      it "can access the new post form" do
+        visit new_session_path
+        fill_in "name", :with => ned_stark.name
+        fill_in "password", :with => ned_stark.password
+        click_button "Log in"
+        click_on "New Post"
+        expect(page).to have_content "Title"
+        expect(page).to have_content "Content"
+      end
+    end
+  end
 end

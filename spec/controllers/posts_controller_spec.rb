@@ -23,4 +23,14 @@ describe PostsController do
       expect(assigns(:post)).to eq new_post
     end
   end
+
+  context '#new' do
+    before(:each){get :new}
+    it "is successful" do
+      expect(response).to be_successful
+    end
+    it "assigns @post to a new post" do
+      expect(assigns(:post)).to be_a_new Post
+    end
+  end
 end
