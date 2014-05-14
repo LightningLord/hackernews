@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-
+  include ApplicationHelper
   def index
     @posts = Post.all
   end
@@ -9,6 +9,7 @@ class PostsController < ApplicationController
   end
 
   def new
+    redirect_to root_path unless current_user
     @post = Post.new
   end
 end

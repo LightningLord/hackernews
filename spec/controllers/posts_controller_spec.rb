@@ -25,7 +25,11 @@ describe PostsController do
   end
 
   context '#new' do
-    before(:each){get :new}
+    let(:ned_stark){FactoryGirl.create(:user)}
+    before(:each) do
+      request.session[:user_id] = ned_stark.id
+      get :new
+    end
     it "is successful" do
       expect(response).to be_successful
     end
