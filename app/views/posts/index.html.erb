@@ -1,0 +1,7 @@
+<h1>All Posts</h1>
+
+<% @posts.each do |post|%>
+  <h3><%= link_to post.title, post_path(post)%></h3>
+  <p><%=post.user.name%></p>
+  <p><%=post.created_at%></p>
+<%end%>
