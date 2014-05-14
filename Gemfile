@@ -7,7 +7,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'awesome_print'
 gem 'bcrypt-ruby'
-
+gem 'protected_attributes'
 
 group :doc do
   gem 'sdoc', require: false

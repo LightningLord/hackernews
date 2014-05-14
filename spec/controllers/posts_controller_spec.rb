@@ -1,5 +1,6 @@
 require 'spec_helper'
 describe PostsController do
+  let(:ned_stark){FactoryGirl.create(:user)}
   context '#index' do
     before(:each) {get :index}
     it "assigns @posts to all posts" do
@@ -21,6 +22,36 @@ describe PostsController do
 
     it "assigns @post to the correct post" do
       expect(assigns(:post)).to eq new_post
+    end
+  end
+
+  context '#new' do
+    before(:each) do
+      request.session[:user_id] = ned_stark.id
+      get :new
+    end
+    it "is successful" do
+      expect(response).to be_successful
+    end
+    it "assigns @post to a new post" do
+      expect(assigns(:post)).to be_a_new Post
+    end
+  end
+
+  context '#create' do
+    before(:each){request.session[:user_id] = ned_stark.id}
+    it "redirects after creating a post" do
+      post :create, :post => {:title => "Winter", :content => "Is Coming"}
+      expect(response).to be_redirect
+    end
+
+    it "creates a post with valid attributes" do
+      expect {post :create, :post => FactoryGirl.attributes_for(:post)}.to change {Post.count}.by(1)
+    end
+
+    it "redirects to root path with invalid attributes" do
+      post :create, :post => {}
+      expect(response).to redirect_to root_path
     end
   end
 end
