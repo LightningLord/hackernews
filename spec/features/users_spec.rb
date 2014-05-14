@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Users", :js => false do
   describe "root page" do
-    before(:each){visit root_path}
+    before(:each){visit new_user_path}
     it "renders a sign up form" do
       expect(page).to have_content "Sign Up"
     end
@@ -13,4 +13,5 @@ describe "Users", :js => false do
       expect(page).to have_content "Ned Stark"
     end
   end
+
 end

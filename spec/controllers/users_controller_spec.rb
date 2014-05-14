@@ -30,7 +30,7 @@ describe UsersController do
     context "invalid params" do
       it "redirects to root " do
         post :create, :user => {name: nil, password: "winter"}
-        expect(response).to redirect_to root_path
+        expect(response).to redirect_to new_user_path
       end
     end
   end
