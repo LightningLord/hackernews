@@ -13,13 +13,19 @@ describe UsersController do
 
   describe "create" do
     context "valid params" do
+      let(:create_user){post :create, :user => FactoryGirl.attributes_for(:user) }
       it "creates a new user" do
-        expect {post :create, :user => FactoryGirl.attributes_for(:user)}.
-        to change {User.count}.by(1)
+        expect {create_user}.to change {User.count}.by(1)
       end
 
-      it "stores user_id in session"
-      it "redirects to user profile"
+      it "stores user_id in session" do
+        create_user
+        expect(session[:user_id]).to_not be_nil
+      end
+      it "redirects to user profile" do
+        create_user
+        expect(response).to be_redirect
+      end
     end
     context "invalid params" do
     end
