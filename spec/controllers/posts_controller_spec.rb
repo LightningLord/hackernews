@@ -45,8 +45,13 @@ describe PostsController do
       expect(response).to be_redirect
     end
 
-    it "creates a post" do
+    it "creates a post with valid attributes" do
       expect {post :create, :post => FactoryGirl.attributes_for(:post)}.to change {Post.count}.by(1)
+    end
+
+    it "redirects to root path with invalid attributes" do
+      post :create, :post => {}
+      expect(response).to redirect_to root_path
     end
   end
 end
