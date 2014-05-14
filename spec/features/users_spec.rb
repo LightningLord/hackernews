@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe "Users", :js => false do
+  let(:ned_stark){FactoryGirl.create(:user)}
   describe "sign up" do
     before(:each){visit new_user_path}
     it "renders a sign up form" do
@@ -15,7 +16,6 @@ describe "Users", :js => false do
   end
 
   describe "log in" do
-    let(:ned_stark){FactoryGirl.create(:user)}
     it "links to a login page" do
       visit root_path
       expect(page).to have_link "Log in"
@@ -33,6 +33,17 @@ describe "Users", :js => false do
       fill_in "password", :with => ned_stark.password
       click_button "Log in"
       expect(page).to have_content "Log out"
+    end
+  end
+
+  describe "log out" do
+    it "allows a user to logout" do
+      visit new_session_path
+      fill_in "name", :with => ned_stark.name
+      fill_in "password", :with => ned_stark.password
+      click_button "Log in"
+      click_on "Log out"
+      expect(page).to have_content "Log in"
     end
   end
 
