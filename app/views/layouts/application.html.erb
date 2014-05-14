@@ -8,7 +8,11 @@
 </head>
 <body>
   <nav>
-    <%= link_to "Log in", new_session_path%>
+    <% if current_user %>
+      <%= link_to "Log out", end_session_path %>
+    <% else %>
+      <%= link_to "Log in", new_session_path%>
+    <% end %>
   </nav>
   <%= yield %>
 
