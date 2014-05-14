@@ -23,4 +23,18 @@ describe SessionsController do
       expect(session[:user_id]).to be_nil
     end
   end
+
+  context "#destroy" do
+    before(:each) do
+      request.session[:user_id] = ned_stark.id
+      get :destroy
+    end
+    it "logs out the user" do
+      expect(session[:user_id]).to be_nil
+    end
+
+    it "redirects to root_path" do
+      expect(response).to redirect_to root_path
+    end
+  end
 end
