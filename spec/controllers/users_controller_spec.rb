@@ -28,8 +28,11 @@ describe UsersController do
       end
     end
     context "invalid params" do
+      it "redirects to root " do
+        post :create, :user => {name: nil, password: "winter"}
+        expect(response).to redirect_to root_path
+      end
     end
-      it "redirects to root "
   end
 
   describe "show" do
