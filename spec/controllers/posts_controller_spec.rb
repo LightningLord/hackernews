@@ -66,6 +66,21 @@ describe PostsController do
       delete :destroy, :id => to_delete.id
       expect(response).to redirect_to root_path
     end
+  end
+
+  context '#edit' do
+    before(:each) do
+      request.session[:user_id] = ned_stark.id
+      get :edit, :id => new_post.id
+    end
+    it "is successful" do
+      expect(response).to be_successful
+    end
+
+    it "assigns @post to the correct post" do
+      expect(assigns(:post)).to eq new_post
+    end
+
 
   end
 end
