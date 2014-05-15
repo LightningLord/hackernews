@@ -1,4 +1,6 @@
 describe "posts", :js => false do
+  let(:ned_stark){FactoryGirl.create(:user)}
+  let(:stub_current_user){PostsController.any_instance.stub(:current_user).and_return(ned_stark)}
   describe "posts index page" do
     let!(:new_post){FactoryGirl.create(:post)}
     before(:each){visit root_path}
@@ -18,21 +20,16 @@ describe "posts", :js => false do
 
   describe "new posts" do
     context 'logged in user' do
-    let(:ned_stark){FactoryGirl.create(:user)}
     before(:each) do
-      visit new_session_path
-      fill_in "name", :with => ned_stark.name
-      fill_in "password", :with => ned_stark.password
-      click_button "Log in"
+      stub_current_user
+      visit new_post_path
     end
       it "can access the new post form" do
-        click_on "New Post"
         expect(page).to have_content "Title"
         expect(page).to have_content "Content"
       end
 
       it "can create a post" do
-        visit new_post_path
         fill_in "post[title]", :with => "Winter"
         fill_in "post[content]", :with => "Is Coming"
         click_on "Create Post"
@@ -42,4 +39,7 @@ describe "posts", :js => false do
       end
     end
   end
+
+
+
 end
