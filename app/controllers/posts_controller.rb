@@ -22,4 +22,10 @@ class PostsController < ApplicationController
       redirect_to root_path
     end
   end
+
+  def destroy
+    post = Post.find(params[:id])
+    post.destroy if current_user == post.user
+    redirect_to root_path
+  end
 end

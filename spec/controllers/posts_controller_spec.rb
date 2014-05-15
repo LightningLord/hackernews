@@ -57,12 +57,13 @@ describe PostsController do
 
   context '#destroy' do
     before(:each){request.session[:user_id] = ned_stark.id}
+    let!(:to_delete){FactoryGirl.create(:post, :user => ned_stark)}
     it "deletes a post" do
-      expect {delete :destroy, :id => ned_stark.id}.to change {Post.count}.by(-1)
+      expect {delete :destroy, :id => to_delete.id}.to change {Post.count}.by(-1)
     end
 
     it "redirects to root path" do
-      delete :destroy, :id => new_post.id
+      delete :destroy, :id => to_delete.id
       expect(response).to redirect_to root_path
     end
 
