@@ -40,6 +40,18 @@ describe "posts", :js => false do
     end
   end
 
+  describe "delete a post" do
+    context 'logged in user' do
+      let(:my_post){FactoryGirl.create(:post)}
+      it "can delete a post" do
+        stub_current_user
+        visit post_path(my_post)
+        click_on "Delete Post"
+        expect(page).to_not have_content my_post.title
+      end
+    end
+  end
+
 
 
 end
