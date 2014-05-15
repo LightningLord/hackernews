@@ -1,6 +1,7 @@
 require 'spec_helper'
 describe PostsController do
   let(:ned_stark){FactoryGirl.create(:user)}
+  let(:new_post){FactoryGirl.create(:post, :user => ned_stark)}
   context '#index' do
     before(:each) {get :index}
     it "assigns @posts to all posts" do
@@ -13,7 +14,6 @@ describe PostsController do
   end
 
   context '#show' do
-    let(:new_post) {FactoryGirl.create(:post)}
     before(:each) {get :show, :id=> new_post.id}
 
     it "is successful" do
@@ -53,5 +53,18 @@ describe PostsController do
       post :create, :post => {}
       expect(response).to redirect_to root_path
     end
+  end
+
+  context '#destroy' do
+    before(:each){request.session[:user_id] = ned_stark.id}
+    it "deletes a post" do
+      expect {delete :destroy, :id => ned_stark.id}.to change {Post.count}.by(-1)
+    end
+
+    it "redirects to root path" do
+      delete :destroy, :id => new_post.id
+      expect(response).to redirect_to root_path
+    end
+
   end
 end
