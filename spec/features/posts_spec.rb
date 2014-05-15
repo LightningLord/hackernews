@@ -42,9 +42,12 @@ describe "posts", :js => false do
 
   describe "delete a post" do
     context 'logged in user' do
-      let(:my_post){FactoryGirl.create(:post)}
+      let(:my_post){FactoryGirl.create(:post, :user => ned_stark)}
       it "can delete a post" do
-        stub_current_user
+        visit new_session_path
+        fill_in "name", :with => ned_stark.name
+        fill_in "password", :with => ned_stark.password
+        click_button "Log in"
         visit post_path(my_post)
         click_on "Delete Post"
         expect(page).to_not have_content my_post.title
