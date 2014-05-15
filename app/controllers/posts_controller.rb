@@ -28,4 +28,8 @@ class PostsController < ApplicationController
     post.destroy if current_user == post.user
     redirect_to root_path
   end
+
+  def edit
+    @post = Post.find(params[:id])
+  end
 end

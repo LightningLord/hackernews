@@ -75,8 +75,8 @@ describe "posts", :js => false do
 
       it "allows the user to edit the post" do
         visit edit_post_path(my_post)
-        fill_in "content", :with => "Winter is coming"
-        click_on "Edit Post"
+        fill_in "post[content]", :with => "Winter is coming"
+        click_on "Update Post"
         expect(page).to have_content "Winter is coming"
       end
     end
