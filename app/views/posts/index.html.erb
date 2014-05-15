@@ -2,6 +2,6 @@
 
 <% @posts.each do |post|%>
   <h3><%= link_to post.title, post_path(post)%></h3>
-  <p><%=post.user.name%></p>
+  <p><%= link_to post.user.name, user_path(post.user)%></p>
   <p><%=post.created_at%></p>
 <%end%>
