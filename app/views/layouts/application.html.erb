@@ -11,9 +11,11 @@
     <% if current_user %>
       <%= link_to "Log out", end_session_path %>
       <%= link_to "New Post", new_post_path %>
+      <%= link_to "My Profile", user_path(current_user) %>
     <% else %>
       <%= link_to "Log in", new_session_path%>
     <% end %>
+    <%= link_to "All Posts", root_path %>
   </nav>
   <%= yield %>
 
