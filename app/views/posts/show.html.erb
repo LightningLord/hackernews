@@ -2,3 +2,6 @@
 <p>By <%=@post.user.name%></p>
 <p><%=@post.created_at%></p>
 <p><%=@post.content%></p>
+<% if @post.user == current_user %>
+  <%= link_to "Delete Post", post_path(@post), :method => :delete %>
+<% end %>
