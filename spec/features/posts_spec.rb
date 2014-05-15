@@ -1,6 +1,13 @@
 describe "posts", :js => false do
   let(:ned_stark){FactoryGirl.create(:user)}
   let(:stub_current_user){PostsController.any_instance.stub(:current_user).and_return(ned_stark)}
+  let(:my_post){FactoryGirl.create(:post, :user => ned_stark)}
+  let(:login) do
+    visit new_session_path
+    fill_in "name", :with => ned_stark.name
+    fill_in "password", :with => ned_stark.password
+    click_button "Log in"
+  end
   describe "posts index page" do
     let!(:new_post){FactoryGirl.create(:post)}
     before(:each){visit root_path}
@@ -42,12 +49,8 @@ describe "posts", :js => false do
 
   describe "delete a post" do
     context 'logged in user' do
-      let(:my_post){FactoryGirl.create(:post, :user => ned_stark)}
       it "can delete a post" do
-        visit new_session_path
-        fill_in "name", :with => ned_stark.name
-        fill_in "password", :with => ned_stark.password
-        click_button "Log in"
+        login
         visit post_path(my_post)
         click_on "Delete Post"
         expect(page).to_not have_content my_post.title
@@ -55,6 +58,29 @@ describe "posts", :js => false do
     end
   end
 
+  describe "edit a post" do
+    context 'logged in user' do
+      before(:each) do
+        login
+        visit post_path(my_post)
+      end
+      it "shows a link to the edit post form" do
+        expect(page).to have_link "Edit Post"
+      end
+
+      it "renders the edit post form with filled in fields" do
+        click_on "Edit Post"
+        expect(page).to have_content my_post.content
+      end
+
+      it "allows the user to edit the post" do
+        visit edit_post_path(my_post)
+        fill_in "content", :with => "Winter is coming"
+        click_on "Edit Post"
+        expect(page).to have_content "Winter is coming"
+      end
+    end
+  end
 
 
 end
