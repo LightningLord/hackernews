@@ -2,6 +2,8 @@ require 'spec_helper'
 describe PostsController do
   let(:ned_stark){FactoryGirl.create(:user)}
   let(:new_post){FactoryGirl.create(:post, :user => ned_stark)}
+  let(:login){request.session[:user_id] = ned_stark.id}
+
   context '#index' do
     before(:each) {get :index}
     it "assigns @posts to all posts" do
@@ -27,7 +29,7 @@ describe PostsController do
 
   context '#new' do
     before(:each) do
-      request.session[:user_id] = ned_stark.id
+      login
       get :new
     end
     it "is successful" do
@@ -39,7 +41,7 @@ describe PostsController do
   end
 
   context '#create' do
-    before(:each){request.session[:user_id] = ned_stark.id}
+    before(:each){login}
     it "redirects after creating a post" do
       post :create, :post => {:title => "Winter", :content => "Is Coming"}
       expect(response).to be_redirect
@@ -56,7 +58,7 @@ describe PostsController do
   end
 
   context '#destroy' do
-    before(:each){request.session[:user_id] = ned_stark.id}
+    before(:each){login}
     let!(:to_delete){FactoryGirl.create(:post, :user => ned_stark)}
     it "deletes a post" do
       expect {delete :destroy, :id => to_delete.id}.to change {Post.count}.by(-1)
@@ -70,7 +72,7 @@ describe PostsController do
 
   context '#edit' do
     before(:each) do
-      request.session[:user_id] = ned_stark.id
+      login
       get :edit, :id => new_post.id
     end
     it "is successful" do
@@ -80,7 +82,20 @@ describe PostsController do
     it "assigns @post to the correct post" do
       expect(assigns(:post)).to eq new_post
     end
+  end
 
+  context '#update' do
+    before(:each) do
+      login
+      patch :update, :id => new_post.id, :post => {:title => "Winter", :content => "is coming"}
+    end
+    it "redirects to post show page" do
+      expect(response).to redirect_to post_path(new_post)
+    end
 
+    it "updates a post" do
+      expect(new_post.reload.title).to eq "Winter"
+      expect(new_post.reload.content).to eq "is coming"
+    end
   end
 end
