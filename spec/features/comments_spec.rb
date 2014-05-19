@@ -29,7 +29,7 @@ describe "comments", :js => false do
       it "can edit own comment" do
         click_link "Edit Comment"
         fill_in "comment[content]", :with => "Winter is coming"
-        click_button "Update Comment"
+        click_on "Update Comment"
         expect(page).to have_content "Winter is coming"
       end
 
