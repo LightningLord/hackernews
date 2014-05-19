@@ -20,9 +20,8 @@ describe "comments", :js => false do
       end
       it "can comment on a post" do
         visit post_path(new_post)
-        save_and_open_page
         fill_in "comment[content]", :with => "Hear me roar"
-        click_button "Comment on this post"
+        click_button "Create Comment"
         expect(page).to have_content "Hear me roar"
       end
       it "can edit own comment"
