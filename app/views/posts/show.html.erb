@@ -15,7 +15,7 @@
 <% if current_user %>
 <h3>New Comment</h3>
   <ul>
-    <%= form_for @post.comments.build do |f| %>
+    <%= form_for Comment.new do |f| %>
     <li><%= f.label "Content" %></li>
     <li><%= f.text_field :content %></li>
     <%= f.submit %>
