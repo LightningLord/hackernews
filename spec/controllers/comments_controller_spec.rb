@@ -21,7 +21,10 @@ describe CommentsController do
       expect(response).to be_successful
     end
 
-    it "edits a comment"
+    it "assigns @comment to the right comment" do
+      expect(assigns(:comment)).to eq my_comment
+    end
+
   end
 
 end
