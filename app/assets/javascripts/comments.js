@@ -1,13 +1,19 @@
 $(function(){
+  $('#new_comment').on("ajax:success", handler.create)
 
-
-
-  $('#new_comment').on("ajax:success", function(e, data, status, xhr){
-    $('#comments').append(xhr.responseText)
-  })
-
-  $('.comment').on("ajax:success", function(e, data, status, xhr){
-    $(e.target).parent().remove();
-  })
+  $('#comments').on("ajax:success", '.comment', handler.destroy)
 
 })
+
+
+var handler = {
+  create : function(e, data, status,xhr){
+    $('#comments').append(xhr.responseText)
+  },
+
+  destroy : function(e, data, status, xhr){
+    $(e.target).parent().remove();
+
+  }
+
+}
