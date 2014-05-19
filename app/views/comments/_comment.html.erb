@@ -3,7 +3,7 @@
   <p>By <%= @comment.user.name %></p>
   <p><%= @comment.created_at %></p>
   <% if @comment.user == current_user %>
-    <%= link_to "Edit Comment", edit_post_comment_path(@comment.post, @comment) %>
-    <%= link_to "Delete Comment", post_comment_path(@comment.post, @comment), :method => :delete , remote: true %>
+    <%= link_to "Edit Comment", edit_post_comment_path(@comment.post, @comment), remote: true, :class => 'edit', class: "edit" %>
+    <%= link_to "Delete Comment", post_comment_path(@comment.post, @comment), :method => :delete , remote: true, class: "delete" %>
   <% end %>
 </div>
