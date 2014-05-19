@@ -3,7 +3,7 @@ describe CommentsController do
   let(:my_post){FactoryGirl.create(:post)}
   let(:ned_stark){FactoryGirl.create(:user)}
   let(:login){request.session[:user_id] = ned_stark.id}
-  let(:my_comment){FactoryGirl.create(:comment, :post => my_post)}
+  let(:my_comment){FactoryGirl.create(:comment, :post => my_post, :user => ned_stark)}
   before(:each){login}
 
   context '#create' do
@@ -44,8 +44,9 @@ describe CommentsController do
   end
 
   context '#destroy' do
+    let!(:to_delete){FactoryGirl.create(:comment, :post => my_post, :user => ned_stark)}
     it "deletes a comment" do
-      expect{ delete :destroy, :post_id => my_post.id, :id => my_comment.id }.to change {
+      expect{ delete :destroy, :post_id => my_post.id, :id => to_delete.id }.to change {
         Comment.count}.by(-1)
     end
 
