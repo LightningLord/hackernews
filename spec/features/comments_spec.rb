@@ -12,8 +12,19 @@ describe "comments", :js => false do
       end
     end
     context "logged in user" do
-
-      it "can comment on a post"
+      before(:each) do
+        visit new_session_path
+        fill_in "name", :with => ned_stark.name
+        fill_in "password", :with => ned_stark.password
+        click_button "Log in"
+      end
+      it "can comment on a post" do
+        visit post_path(new_post)
+        save_and_open_page
+        fill_in "comment[content]", :with => "Hear me roar"
+        click_button "Comment on this post"
+        expect(page).to have_content "Hear me roar"
+      end
       it "can edit own comment"
       it "can delete own comment"
     end
