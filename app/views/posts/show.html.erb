@@ -6,3 +6,9 @@
   <%= link_to "Delete Post", post_path(@post), :method => :delete %>
   <%= link_to "Edit Post", edit_post_path(@post) %>
 <% end %>
+<h2>Comments</h2>
+<% @post.comments.each do |comment|  %>
+  <p><%= comment.content %></p>
+  <p>By <%= comment.user.name %></p>
+  <p><%= comment.created_at %></p>
+<% end %>
