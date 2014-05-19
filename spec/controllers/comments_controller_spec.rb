@@ -4,9 +4,9 @@ describe CommentsController do
   let(:ned_stark){FactoryGirl.create(:user)}
   let(:login){request.session[:user_id] = ned_stark.id}
   let(:my_comment){FactoryGirl.create(:comment, :post => my_post)}
+  before(:each){login}
 
   context '#create' do
-    before(:each){login}
     it "creates a comment" do
       expect { post :create, :post_id => my_post.id, :comment =>
         FactoryGirl.attributes_for(:comment) }.to change {Comment.count}.by(1)
@@ -20,10 +20,7 @@ describe CommentsController do
   end
 
   context '#edit' do
-    before(:each) do
-      login
-      get :edit, :post_id => my_post.id, :id => my_comment.id
-    end
+    before(:each) { get :edit, :post_id => my_post.id, :id => my_comment.id}
     it "is successful" do
       expect(response).to be_successful
     end
@@ -35,10 +32,8 @@ describe CommentsController do
   end
 
   context '#update' do
-    before(:each) do
-      login
-      patch :update, :post_id => my_post.id, :id => my_comment.id, :comment => {:content => "Ours is the fury"}
-    end
+    before(:each){patch :update, :post_id => my_post.id, :id => my_comment.id,
+      :comment => {:content => "Ours is the fury"} }
     it "updates a comment" do
       expect(my_comment.reload.content).to eq "Ours is the fury"
     end
@@ -46,6 +41,10 @@ describe CommentsController do
     it "redirects to post show page" do
       expect(response).to redirect_to post_path(my_post)
     end
+  end
+
+  context '#destroy' do
+
   end
 
 
