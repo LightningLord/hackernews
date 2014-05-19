@@ -33,7 +33,10 @@ describe "comments", :js => false do
         expect(page).to have_content "Winter is coming"
       end
 
-      it "can delete own comment"
+      it "can delete own comment" do
+        click_on "Delete Comment"
+        expect(page).to_not have_content ned_comment.content
+      end
     end
   end
 end
