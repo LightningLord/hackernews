@@ -36,6 +36,7 @@ describe "comments", :js => true do
 
       it "can delete own comment" do
         click_on "Delete Comment"
+        wait_for_ajax_to_finish
         expect(page).to_not have_content ned_comment.content
       end
     end
