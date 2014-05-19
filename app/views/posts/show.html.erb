@@ -11,6 +11,9 @@
   <p><%= comment.content %></p>
   <p>By <%= comment.user.name %></p>
   <p><%= comment.created_at %></p>
+  <% if comment.user == current_user %>
+    <%= link_to "Edit Comment", edit_post_comment_path(@post, comment) %>
+  <% end %>
 <% end %>
 <% if current_user %>
 <h3>New Comment</h3>
