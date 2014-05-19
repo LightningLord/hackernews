@@ -5,7 +5,10 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
   resources :users, only: [:new, :create, :show]
-  resources :posts
+  resources :posts do
+    resources :comments, only: [:create, :edit, :update, :destroy]
+
+  end
   resources :sessions, only: [:new, :create]
   get "logout" => "sessions#destroy", :as => "end_session"
   root :to => 'posts#index'
