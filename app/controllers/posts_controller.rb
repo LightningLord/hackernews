@@ -35,8 +35,7 @@ class PostsController < ApplicationController
 
   def update
     post = Post.find(params[:id])
-    redirect_to root_path unless current_user == post.user
-    if post.update_attributes(params[:post])
+    if post.user == current_user && post.update_attributes(params[:post])
       redirect_to post_path(post)
     else
       redirect_to edit_post_path(post)
