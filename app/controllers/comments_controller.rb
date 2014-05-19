@@ -1,10 +1,10 @@
 class CommentsController < ApplicationController
   include ApplicationHelper
   def create
-    comment = Post.find(params[:post_id]).comments.build(params[:comment])
-    comment.user = current_user
-    comment.save
-    redirect_to post_path(comment.post)
+    @comment = Post.find(params[:post_id]).comments.build(params[:comment])
+    @comment.user = current_user
+    @comment.save
+    render :partial => "comment", locals: {:comment => @comment, :post => @comment.post}
   end
 
   def edit
