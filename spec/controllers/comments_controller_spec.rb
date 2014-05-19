@@ -12,10 +12,10 @@ describe CommentsController do
         FactoryGirl.attributes_for(:comment) }.to change {Comment.count}.by(1)
     end
 
-    it "redirects" do
+    it "sends back a partial" do
       post(:create, :post_id => my_post.id,
         :comment => FactoryGirl.attributes_for(:comment))
-      expect(response).to be_redirect
+      expect(response).to render_template(:partial => '_comment')
     end
   end
 
@@ -39,7 +39,7 @@ describe CommentsController do
     end
 
     it "redirects to post show page" do
-      expect(response).to redirect_to post_path(my_post)
+      expect(response).to render_template(:partial => '_comment')
     end
   end
 
@@ -50,10 +50,6 @@ describe CommentsController do
         Comment.count}.by(-1)
     end
 
-    it "redirects to post show page" do
-      delete :destroy, :post_id => my_post.id, :id => my_comment.id
-      expect(response).to redirect_to post_path(my_comment.post)
-    end
   end
 
 

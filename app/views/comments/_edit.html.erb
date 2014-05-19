@@ -1,0 +1,13 @@
+<div class = "edit_comment_form">
+  <h3>Edit Comment</h3>
+
+  <ul>
+    <%= form_for [@comment.post, @comment], remote: true do |f| %>
+      <li><%= f.label :content %></li>
+      <li><%= f.text_field :content %></li>
+      <li><%= f.submit %></li>
+    <% end %>
+  </ul>
+  <p>By <%= comment.user.name %></p>
+  <p><%= comment.created_at %></p>
+</div>
