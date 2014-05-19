@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe "comments", :js => false do
+describe "comments", :js => true do
   describe "on the post show page" do
     let(:ned_stark){FactoryGirl.create(:user)}
     let(:tyrion){FactoryGirl.create(:user)}
@@ -24,6 +24,7 @@ describe "comments", :js => false do
       it "can comment on a post" do
         fill_in "comment[content]", :with => "Hear me roar"
         click_button "Create Comment"
+        wait_for_ajax_to_finish
         expect(page).to have_content "Hear me roar"
       end
       it "can edit own comment" do
