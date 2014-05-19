@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # root 'welcome#index'
   resources :users, only: [:new, :create, :show]
   resources :posts do
-    resources :comments, only: [:create, :edit, :update]
+    resources :comments, only: [:create, :edit, :update, :destroy]
 
   end
   resources :sessions, only: [:new, :create]
