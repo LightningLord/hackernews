@@ -1,19 +1,13 @@
 class CommentsController < ApplicationController
   include ApplicationHelper
   def create
-    if current_user
-      comment = Post.find(params[:post_id]).comments.build(params[:comment])
-      comment.user = current_user
-      comment.save
-      redirect_to post_path(comment.post)
-    else
-      redirect_to new_session_path
-    end
-
+    comment = Post.find(params[:post_id]).comments.build(params[:comment])
+    comment.user = current_user
+    comment.save
+    redirect_to post_path(comment.post)
   end
 
   def edit
-    redirect_to new_session_path unless current_user
     @comment = Comment.find(params[:id])
   end
 
