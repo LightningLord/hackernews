@@ -39,7 +39,7 @@ describe CommentsController do
     end
 
     it "redirects to post show page" do
-      expect(response).to redirect_to post_path(my_post)
+      expect(response).to render_template(:partial => '_comment')
     end
   end
 

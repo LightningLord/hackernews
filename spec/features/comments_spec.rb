@@ -29,8 +29,10 @@ describe "comments", :js => true do
       end
       it "can edit own comment" do
         click_link "Edit Comment"
-        fill_in "comment[content]", :with => "Winter is coming"
+        wait_for_ajax_to_finish
+        within('.edit_comment'){fill_in "comment[content]", :with => "Winter is coming"}
         click_on "Update Comment"
+        wait_for_ajax_to_finish
         expect(page).to have_content "Winter is coming"
       end
 
