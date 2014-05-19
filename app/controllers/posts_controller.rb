@@ -9,12 +9,12 @@ class PostsController < ApplicationController
   end
 
   def new
-    redirect_to root_path unless current_user
+    redirect_to new_session_path unless current_user
     @post = Post.new
   end
 
   def create
-    redirect_to root_path unless current_user
+    redirect_to new_session_path unless current_user
     post = current_user.posts.build(params[:post])
     if post.save
       redirect_to post_path(post)
