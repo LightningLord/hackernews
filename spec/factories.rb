@@ -10,4 +10,10 @@ FactoryGirl.define do
     content {Faker::Lorem.sentence}
     user
   end
+
+  factory :comment do
+    content {Faker::Lorem.sentence}
+    user
+    post
+  end
 end
