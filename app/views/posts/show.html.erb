@@ -6,6 +6,7 @@
   <%= link_to "Delete Post", post_path(@post), :method => :delete %>
   <%= link_to "Edit Post", edit_post_path(@post) %>
 <% end %>
+<div id = "comments">
 <h2>Comments</h2>
 <% @post.comments.each do |comment|  %>
   <p><%= comment.content %></p>
@@ -16,10 +17,11 @@
     <%= link_to "Delete Comment", post_comment_path(@post, comment), :method => :delete %>
   <% end %>
 <% end %>
+</div>
 <% if current_user %>
 <h3>New Comment</h3>
   <ul>
-    <%= form_for [@post, Comment.new] do |f| %>
+    <%= form_for [@post, Comment.new], remote: true do |f| %>
     <li><%= f.label "Content" %></li>
     <li><%= f.text_field :content %></li>
     <%= f.submit %>
