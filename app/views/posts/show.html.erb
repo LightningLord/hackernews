@@ -2,10 +2,12 @@
 <p>By <%=link_to @post.user.name, @post.user%></p>
 <p><%=@post.created_at%></p>
 <p><%=@post.content%></p>
+<p><%= @post.vote_count %></p>
 <% if @post.user == current_user %>
   <%= link_to "Delete Post", post_path(@post), :method => :delete %>
   <%= link_to "Edit Post", edit_post_path(@post) %>
 <% end %>
+<%= render :partial => "votes/post_vote" %>
 <div id = "comments">
 <h2>Comments</h2>
 <% @post.comments.each do |comment|  %>

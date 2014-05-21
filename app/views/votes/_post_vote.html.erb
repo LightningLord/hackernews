@@ -1,0 +1,4 @@
+<% if current_user %>
+  <%= link_to "Upvote this post", votes_path(vote_data: {votable_id: @post.id, votable_type: "post", value: +1}), method: :post, remote: true %>
+  <%= link_to "Downvote this post", votes_path(vote_data: {votable_id: @post.id, votable_type: "post", value: -1}), method: :post, remote: true %>
+<% end %>
