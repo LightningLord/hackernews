@@ -9,15 +9,7 @@
 <div id = "comments">
 <h2>Comments</h2>
 <% @post.comments.each do |comment|  %>
-  <div class = "comment">
-    <p><%= comment.content %></p>
-    <p>By <%= comment.user.name %></p>
-    <p><%= comment.created_at %></p>
-    <% if comment.user == current_user %>
-      <%= link_to "Edit Comment", edit_post_comment_path(@post, comment), remote: true, class: "edit" %>
-      <%= link_to "Delete Comment", post_comment_path(@post, comment), :method => :delete, remote: true, class: "delete" %>
-    <% end %>
-  </div>
+  <%= render :partial => "comments/comment", locals: {:@comment => comment} %>
 <% end %>
 </div>
 <% if current_user %>
