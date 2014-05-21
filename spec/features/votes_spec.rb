@@ -11,13 +11,13 @@ describe "Votes", :js => true do
     visit post_path(new_post)
   end
 
-  describe "vote on a question" do
-    it "can upvote a question" do
-      click_on "Upvote this question"
+  describe "vote on a post" do
+    it "can upvote a post" do
+      click_on "Upvote this post"
       wait_for_ajax_to_finish
       expect(page).to have_content new_post.reload.vote_count
     end
-    it "can downvote a question"
+    it "can downvote a post"
   end
 
   describe "vote on a comment" do
