@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create, :show]
   resources :posts do
     resources :comments, only: [:create, :edit, :update, :destroy]
-
   end
+  resources :votes, only: [:create]
   resources :sessions, only: [:new, :create]
   get "logout" => "sessions#destroy", :as => "end_session"
   root :to => 'posts#index'
