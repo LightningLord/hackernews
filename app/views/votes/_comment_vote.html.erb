@@ -1,0 +1,6 @@
+<% if current_user %>
+  <div class = "comment-vote">
+    <%= link_to "Upvote this comment", votes_path(vote_data: {votable_id: @comment.id, votable_type: "Comment", value: +1}), method: :post, remote: true, class: "comment_vote" %>
+    <%= link_to "Downvote this comment", votes_path(vote_data: {votable_id: @comment.id, votable_type: "Comment", value: -1}), method: :post, remote: true, class: "comment_vote" %>
+  </div>
+<% end %>
