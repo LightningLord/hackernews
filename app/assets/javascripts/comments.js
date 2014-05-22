@@ -1,16 +1,16 @@
 $(function(){
-  $('#new_comment').on("ajax:success", handler.create)
+  $('#new_comment').on("ajax:success", commentHandler.create)
 
-  $('#comments').on("ajax:success", '.delete', handler.destroy)
+  $('#comments').on("ajax:success", '.delete', commentHandler.destroy)
 
-  $('#comments').on("ajax:success", '.edit', handler.edit)
+  $('#comments').on("ajax:success", '.edit', commentHandler.edit)
 
-  $('#comments').on("ajax:success", '.edit_comment', handler.update)
+  $('#comments').on("ajax:success", '.edit_comment', commentHandler.update)
 
 })
 
 
-var handler = {
+var commentHandler = {
   create : function(e, data, status,xhr){
     $('#comments').append(xhr.responseText)
   },
