@@ -1,6 +1,6 @@
 $(function(){
   $('.post_vote').on("ajax:success", voteHandler.updatePostPoints)
-  $('.comment_vote').on("ajax:success", voteHandler.updateCommentPoints)
+  $('#comments').on("ajax:success", '.comment_vote', voteHandler.updateCommentPoints)
 })
 
 var voteHandler = {
