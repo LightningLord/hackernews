@@ -7,6 +7,6 @@ class VotesController < ApplicationController
       votable.update_vote_count(vote.value)
       current_user.votes << vote
     end
-    render text:"You've voted"
+    render json: {points: votable.vote_count}.to_json
   end
 end
