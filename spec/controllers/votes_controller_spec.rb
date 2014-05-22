@@ -18,7 +18,10 @@ describe VotesController do
       expect {create }.to change {my_post.reload.vote_count}.by(1)
     end
 
-    it "renders something"
+    it "renders json of points" do
+      create
+      expect(response.body).to eq({ "points" => my_post.reload.vote_count}.to_json)
+    end
   end
 end
 
