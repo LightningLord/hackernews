@@ -4,7 +4,7 @@ describe User do
   it {should have_many :comments}
   it {should validate_presence_of :password}
   it {should validate_presence_of :name}
-
+  it {should have_many :votes}
   context "create" do
     it "sets user's name properly" do
       params = {name: "Ned Stark", password: "winter"}
