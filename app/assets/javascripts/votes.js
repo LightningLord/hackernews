@@ -1,6 +1,5 @@
 $(function(){
-  $('.post_vote').on("ajax:success", voteHandler.updatePostPoints)
-  $('#comments').on("ajax:success", '.comment_vote', voteHandler.updateCommentPoints)
+  voteHandler.bindListeners()
 })
 
 var voteHandler = {
@@ -9,5 +8,10 @@ var voteHandler = {
   },
   updateCommentPoints: function(e, data, status, xhr){
     $(e.target).parent().parent().find(".comment_points").html(xhr.responseJSON.points)
+  },
+  bindListeners: function(){
+  $('.post_vote').on("ajax:success", voteHandler.updatePostPoints)
+  $('#comments').on("ajax:success", '.comment_vote', voteHandler.updateCommentPoints)
+
   }
 }
