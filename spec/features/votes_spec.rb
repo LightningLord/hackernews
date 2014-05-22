@@ -15,9 +15,13 @@ describe "Votes", :js => true do
     it "can upvote a post" do
       click_on "Upvote this post"
       wait_for_ajax_to_finish
-      expect(page).to have_content new_post.reload.vote_count
+      expect(page).to have_content "Points: #{new_post.reload.vote_count}"
     end
-    it "can downvote a post"
+    it "can downvote a post" do
+      click_on "Downvote this post"
+      wait_for_ajax_to_finish
+      expect(page).to have_content "Points: #{new_post.reload.vote_count}"
+    end
   end
 
   describe "vote on a comment" do
