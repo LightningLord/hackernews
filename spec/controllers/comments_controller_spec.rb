@@ -32,14 +32,30 @@ describe CommentsController do
   end
 
   context '#update' do
-    before(:each){patch :update, :post_id => my_post.id, :id => my_comment.id,
-      :comment => {:content => "Ours is the fury"} }
-    it "updates a comment" do
-      expect(my_comment.reload.content).to eq "Ours is the fury"
-    end
+    let(:update_post){patch :update, :post_id => my_post.id, :id => my_comment.id,
+        :comment => {:content => "Ours is the fury"} }
+    context 'valid user' do
+      before(:each){update_post}
+      it "updates a comment" do
+        expect(my_comment.reload.content).to eq "Ours is the fury"
+      end
 
-    it "redirects to post show page" do
-      expect(response).to render_template(:partial => '_comment')
+      it "renders comment partial for valid user" do
+        expect(response).to render_template(:partial => '_comment')
+      end
+    end
+    context 'invalid user' do
+      before(:each) do
+        request.session[:user_id] = FactoryGirl.create(:user).id
+        update_post
+      end
+      it "renders not_owner partial" do
+        expect(response).to render_template(:partial => '_not_owner')
+      end
+
+      it "does not update the comment" do
+        expect(my_comment.content).to eq my_comment.reload.content
+      end
     end
   end
 
