@@ -85,17 +85,33 @@ describe PostsController do
   end
 
   context '#update' do
-    before(:each) do
-      login
-      patch :update, :id => new_post.id, :post => {:title => "Winter", :content => "is coming"}
-    end
-    it "redirects to post show page" do
-      expect(response).to redirect_to post_path(new_post)
-    end
+    let(:update_post){patch :update, :id => new_post.id, :post => {:title => "Winter", :content => "is coming"}}
 
-    it "updates a post" do
-      expect(new_post.reload.title).to eq "Winter"
-      expect(new_post.reload.content).to eq "is coming"
+    context 'valid user' do
+      before(:each) do
+        login
+        update_post
+      end
+      it "redirects to post show page" do
+        expect(response).to redirect_to post_path(new_post)
+      end
+
+      it "updates a post" do
+        expect(new_post.reload.title).to eq "Winter"
+        expect(new_post.reload.content).to eq "is coming"
+      end
+    end
+    context 'invalid user' do
+      before(:each) do
+        request.session[:user_id] = FactoryGirl.create(:user).id
+        update_post
+      end
+      it "redirects back to edit post form" do
+        expect(response).to redirect_to edit_post_path(new_post)
+      end
+      it "does not update the post" do
+        expect(new_post.content).to eq my_post.reload.content
+      end
     end
   end
 end
