@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-  include ApplicationHelper
   def create
     @comment = Post.find(params[:post_id]).comments.build(params[:comment])
     @comment.user = current_user

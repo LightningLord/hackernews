@@ -1,5 +1,4 @@
 class VotesController < ApplicationController
-  include ApplicationHelper
   def create
     vote = Vote.new(params[:vote_data])
     if vote.save

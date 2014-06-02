@@ -110,7 +110,7 @@ describe PostsController do
         expect(response).to redirect_to edit_post_path(new_post)
       end
       it "does not update the post" do
-        expect(new_post.content).to eq my_post.reload.content
+        expect(new_post.content).to eq new_post.reload.content
       end
     end
   end
